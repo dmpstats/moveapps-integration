@@ -13,6 +13,13 @@
       "description": "Provide your EarthRanger API key",
       "defaultValue": "",
       "type": "STRING"
+    },
+	{
+      "id": "batch_size",
+      "name": "Batch Size",
+      "description": "Number of observations per API call.  Default is 50.  Enter 0 to send all observations in a single batch.",
+      "defaultValue": 50,
+      "type": "DOUBLE"
     }
   ],
   "dependencies": {

@@ -19,6 +19,7 @@ args <- list()
 # Add your arguments of your r function here
 args[["server"]] = NULL # string
 args[["api_key"]] = NULL # string
+args[["batch_size"]] = 50 # double
 
 #################################################################
 #################################################################
