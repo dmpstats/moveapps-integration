@@ -1,0 +1,54 @@
+{
+  "settings": [
+	{
+      "id": "server",
+      "name": "target server for upload",
+      "description": "Choose the server for uploading",
+      "defaultValue": "",
+      "type": "STRING"
+    },
+	{
+      "id": "api_key",
+      "name": "EarthRanger API key",
+      "description": "Provide your EarthRanger API key",
+      "defaultValue": "",
+      "type": "STRING"
+    }
+  ],
+  "dependencies": {
+    "R": [
+      {
+        "name": "move"
+      },
+      {
+        "name": "jsonlite"
+      },
+      {
+        "name": "httr"
+      }
+    ]
+  },
+  "license": {
+    "key": "MIT"
+  },
+  "language": "eng",
+  "keywords": [
+	"earthranger",
+        "cluster"
+  ],
+  "people": [
+    {
+      "firstName": "Lee",
+      "middleInitials": null,
+      "lastName": "Talbott",
+      "email": "lee@nimblegravity.com",
+      "roles": ["compiler","author","creator"],
+      "orcid": "",
+      "affiliation": "Nimble Gravity",
+      "affiliationRor": ""
+    }
+  ],
+  "documentation" : {
+    "url": "https://github.com/leetalbott/EarthRanger-Upload/blob/main/README.md"
+  }
+}
