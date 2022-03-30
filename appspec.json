@@ -38,17 +38,17 @@
   ],
   "people": [
     {
-      "firstName": "Lee",
+      "firstName": "Chris",
       "middleInitials": null,
-      "lastName": "Talbott",
-      "email": "lee@nimblegravity.com",
+      "lastName": "Doehring",
+      "email": "chrisdo@earthranger.com",
       "roles": ["compiler","author","creator"],
       "orcid": "",
-      "affiliation": "Nimble Gravity",
+      "affiliation": "EarthRanger / Allen Institute for Artificial Intelligence",
       "affiliationRor": ""
     }
   ],
   "documentation" : {
-    "url": "https://github.com/leetalbott/EarthRanger-Upload/blob/main/README.md"
+    "url": "https://github.com/PADAS/moveapps-integration/blob/main/README.md"
   }
 }
