@@ -2,7 +2,7 @@
 
 MoveApps
 
-Github repository: https://github.com/leetalbott/EarthRanger-Upload
+Github repository: https://github.com/PADAS/moveapps-integration
 
 ## Description
 Simple app to upload data from a movestack to EarthRanger via API.
