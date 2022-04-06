@@ -53,6 +53,16 @@
       "orcid": "",
       "affiliation": "EarthRanger / Allen Institute for Artificial Intelligence",
       "affiliationRor": ""
+    },
+    {
+      "firstName": "Lee",
+      "middleInitials": null,
+      "lastName": "Talbott",
+      "email": "lee@nimblegravity.com",
+      "roles": ["compiler","author","creator"],
+      "orcid": "",
+      "affiliation": "Nimble Gravity",
+      "affiliationRor": ""
     }
   ],
   "documentation" : {
