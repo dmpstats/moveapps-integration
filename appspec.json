@@ -20,6 +20,20 @@
       "description": "Number of observations per API call.  Default is 50.  Enter 0 to send all observations in a single batch.",
       "defaultValue": 50,
       "type": "DOUBLE"
+    },
+	{
+      "id": "event_type",
+      "name": "Event Type",
+      "description": "Movebank event type",
+      "defaultValue": "",
+      "type": "STRING"
+    },
+	{
+      "id": "moveapp_id",
+      "name": "MoveApp Identifier",
+      "description": "MoveApp Identfier",
+      "defaultValue": "",
+      "type": "STRING"
     }
   ],
   "dependencies": {
@@ -52,16 +66,6 @@
       "roles": ["compiler","author","creator"],
       "orcid": "",
       "affiliation": "EarthRanger / Allen Institute for Artificial Intelligence",
-      "affiliationRor": ""
-    },
-    {
-      "firstName": "Lee",
-      "middleInitials": null,
-      "lastName": "Talbott",
-      "email": "lee@nimblegravity.com",
-      "roles": ["compiler","author","creator"],
-      "orcid": "",
-      "affiliation": "Nimble Gravity",
       "affiliationRor": ""
     }
   ],
