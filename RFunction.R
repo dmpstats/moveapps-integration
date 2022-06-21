@@ -2,7 +2,7 @@ library('move')
 library('jsonlite')
 library('httr')
 
-rFunction = function(server,api_key,batch_size,data) {
+rFunction = function(server,api_key,batch_size,event_type,moveapp_id,data) {
   Sys.setenv(tz="UTC")
 
   if (is.null(batch_size))
