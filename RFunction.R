@@ -22,7 +22,7 @@ rFunction = function(server,api_key,batch_size,event_type,moveapp_id,data) {
     batch@data[is.na(batch@data)] <- ""
     for (j in 1:nrow(batch))
       {
-      output <- list("device_id"=batch@data$tag_id[j]
+      output <- list("device_id"=batch@data$tagID[j]
                      ,"recorded_at"=format(batch@data$timestamp[j],"%Y-%m-%d %X%z")
                      ,"location"=list("x"=batch@data$location_long[j],"y"=batch@data$location_lat[j])
                      ,"moveapp_id"=moveapp_id
