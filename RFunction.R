@@ -19,14 +19,13 @@ rFunction = function(server,api_key,batch_size,event_type,moveapp_id,data) {
   {
     if (batch_size==0) batch <- data else batch <- data[((i-1)*batch_size+1):(min(i*batch_size,nrow(data))),]
     names(batch@data) <- gsub(".","_",names(batch@data),fixed=TRUE)
-    batch@data$moveapp_id <- moveapp_id
     batch@data[is.na(batch@data)] <- ""
     for (j in 1:nrow(batch))
       {
       output <- list("device_id"=batch@data$tag_id[j]
                      ,"recorded_at"=format(batch@data$timestamp[j],"%Y-%m-%d %X%z")
                      ,"location"=list("x"=batch@data$location_long[j],"y"=batch@data$location_lat[j])
-                     ,"moveapp_id"=batch@data$moveapp_id
+                     ,"moveapp_id"=moveapp_id
                      ,"title"=batch@study
                      ,"event_type"=event_type
                      ,"event_details"=as.list(batch[j]@data)
