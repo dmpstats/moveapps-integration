@@ -22,6 +22,7 @@ args[["api_key"]] = NULL # string
 args[["batch_size"]] = 50 # double
 args[["event_type"]] = NULL # string
 args[["moveapp_id"]] = NULL # string
+args[["eventlist_fields"]] = NULL # string
 
 #################################################################
 #################################################################
