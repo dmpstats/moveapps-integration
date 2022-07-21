@@ -2,7 +2,7 @@ library('move')
 library('jsonlite')
 library('httr')
 
-rFunction = function(server,api_key,batch_size,event_type,moveapp_id,data) {
+rFunction = function(server,api_key,batch_size,event_type,moveapp_id,eventlist_fields,data) {
   Sys.setenv(tz="UTC")
 
   if (is.null(batch_size))
@@ -20,6 +20,10 @@ rFunction = function(server,api_key,batch_size,event_type,moveapp_id,data) {
     if (batch_size==0) batch <- data else batch <- data[((i-1)*batch_size+1):(min(i*batch_size,nrow(data))),]
     names(batch@data) <- gsub(".","_",names(batch@data),fixed=TRUE)
     batch@data[is.na(batch@data)] <- ""
+    eventlist_fields_parsed <- unlist(strsplit(eventlist_fields,",|;")) # parse requested event list field names into a vector (allows comma or semicolon)
+    eventlist_fields_trimmed <- gsub("\\s+","",eventlist_fields_parsed) # remove spaces from parsed event list field names
+    eventlist_fields_filtered <- eventlist_fields_trimmed[eventlist_fields_trimmed %in% names(batch@data)] # remove requested event list field names that are not in the dataset
+    if (length(eventlist_fields_filtered)==0) eventlist_fields_filtered <- names(batch@data) # use all field names if no event list field names were supplied
     for (j in 1:nrow(batch))
       {
       output <- list("device_id"=batch@data$tagID[j]
@@ -28,7 +32,7 @@ rFunction = function(server,api_key,batch_size,event_type,moveapp_id,data) {
                      ,"moveapp_id"=moveapp_id
                      ,"title"=batch@study
                      ,"event_type"=event_type
-                     ,"event_details"=as.list(batch[j]@data)
+                     ,"event_details"=as.list(batch[j]@data[eventlist_fields_filtered])
                      )
       output_json <- toJSON(output,pretty=TRUE,auto_unbox=TRUE) # convert list to json
       output_json_str <- toString(output_json)
