@@ -34,6 +34,13 @@
       "description": "MoveApp Identfier",
       "defaultValue": "",
       "type": "STRING"
+    },
+	{
+      "id": "eventlist_fields",
+      "name": "Fields to Pass to ER",
+      "description": "If you would like to pass only certain movestack fields, list them here separated by comma or semicolon.  Leaving this blank will pass all fields.",
+      "defaultValue": "",
+      "type": "STRING"
     }
   ],
   "dependencies": {
