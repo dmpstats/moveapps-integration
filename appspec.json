@@ -46,7 +46,7 @@
   "dependencies": {
     "R": [
       {
-        "name": "move"
+        "name": "move2"
       },
       {
         "name": "jsonlite"
@@ -66,10 +66,10 @@
   ],
   "people": [
     {
-      "firstName": "Chris",
+      "firstName": "Jes",
       "middleInitials": null,
-      "lastName": "Doehring",
-      "email": "chrisdo@earthranger.com",
+      "lastName": "Lefcourt",
+      "email": "jesl@earthranger.com",
       "roles": ["compiler","author","creator"],
       "orcid": "",
       "affiliation": "EarthRanger / Allen Institute for Artificial Intelligence",
