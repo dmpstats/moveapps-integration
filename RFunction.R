@@ -9,9 +9,8 @@ library('httr')
 # logger.fatal(), logger.error(), logger.warn(), logger.info(), logger.debug(), logger.trace()
 
 # Showcase injecting app setting (parameter `year`)
-rFunction = function(sdk, server,api_key,batch_size,event_type,moveapp_id,eventlist_fields,data, ...) {
-  logger.info(paste("Welcome to the", sdk))
-  
+rFunction = function(server,api_key,batch_size,event_type,moveapp_id,eventlist_fields,data, ...) {
+
   Sys.setenv(tz="UTC")
   if (is.null(batch_size))
   {
