@@ -67,7 +67,7 @@ rFunction = function(server,api_key,batch_size,event_type,moveapp_id,eventlist_f
     
     logger.info(paste0("Posting data to ", url))
     er_post <- POST(
-      url = server,
+      url = url,
       add_headers(apikey = api_key, 
                   "accept" = "application/json",
                   "content-type" = "application/json")
