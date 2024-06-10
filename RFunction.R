@@ -1,12 +1,15 @@
 library('move2')
 library('jsonlite')
 library('httr')
+library('sf')
 
 ## The parameter "data" is reserved for the data object passed on from the previous app
 
 # to display messages to the user in the log file of the App in MoveApps
 # one can use the function from the logger.R file:
 # logger.fatal(), logger.error(), logger.warn(), logger.info(), logger.debug(), logger.trace()
+
+`%!in%` <- Negate(`%in%`)
 
 # Showcase injecting app setting (parameter `year`)
 rFunction = function(server,api_key,batch_size,event_type,moveapp_id,eventlist_fields,data, ...) {
@@ -20,6 +23,22 @@ rFunction = function(server,api_key,batch_size,event_type,moveapp_id,eventlist_f
   
   num_batches <- ifelse(batch_size==0,1,ceiling(nrow(data)/batch_size)) # determine number of batches needed for outer loop based on number of observations in the movestack
 
+  
+  # set up missing required columns
+  if("tagID" %!in% names(data))  data$tagID <- mt_track_id(data)
+  if("timestamp" %!in% names(data))  data$timestamp <- mt_time(data)
+  
+  if("location_long" %!in% names(data)){
+    if(st_is_longlat(data)){
+      lon_lat <- st_coordinates(data)
+    }else{
+      lon_lat <- data |> 
+        sf::st_transform(4326) |> 
+        sf::st_coordinates()
+    }
+    data$location_long <- lon_lat[, 'X']
+    data$location_lat <- lon_lat[, 'Y']
+  } 
   
   status_codes <- numeric() # for capturing API response status codes
   for (i in 1:num_batches)
