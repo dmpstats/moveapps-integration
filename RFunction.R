@@ -2,6 +2,7 @@ library('move2')
 library('jsonlite')
 library('httr')
 library('sf')
+library('units')
 
 ## The parameter "data" is reserved for the data object passed on from the previous app
 
@@ -41,15 +42,18 @@ rFunction = function(server,api_key,batch_size,event_type,moveapp_id,eventlist_f
   } 
   
   status_codes <- numeric() # for capturing API response status codes
+
+  names(data) <- gsub(".","_",names(data),fixed=TRUE)
+  eventlist_fields_parsed <- unlist(strsplit(eventlist_fields,",|;")) # parse requested event list field names into a vector (allows comma or semicolon)
+  eventlist_fields_trimmed <- gsub("\\s+","",eventlist_fields_parsed) # remove spaces from parsed event list field names
+  eventlist_fields_filtered <- eventlist_fields_trimmed[eventlist_fields_trimmed %in% names(data)] # remove requested event list field names that are not in the dataset
+  if (length(eventlist_fields_filtered)==0) eventlist_fields_filtered <- names(data) # use all field names if no event list field names were supplied
+  eventlist_fields_filtered <- eventlist_fields_filtered[eventlist_fields_filtered != "geometry"]
+
   for (i in 1:num_batches)
   {
     if (batch_size==0) batch <- data else batch <- data[((i-1)*batch_size+1):(min(i*batch_size,nrow(data))),]
-    names(batch) <- gsub(".","_",names(batch),fixed=TRUE)
-    eventlist_fields_parsed <- unlist(strsplit(eventlist_fields,",|;")) # parse requested event list field names into a vector (allows comma or semicolon)
-    eventlist_fields_trimmed <- gsub("\\s+","",eventlist_fields_parsed) # remove spaces from parsed event list field names
-    eventlist_fields_filtered <- eventlist_fields_trimmed[eventlist_fields_trimmed %in% names(batch)] # remove requested event list field names that are not in the dataset
-    if (length(eventlist_fields_filtered)==0) eventlist_fields_filtered <- names(batch) # use all field names if no event list field names were supplied
-    
+
     for (j in 1:nrow(batch))
     {
       output <- list("device_id"=batch$tagID[j]
@@ -59,6 +63,7 @@ rFunction = function(server,api_key,batch_size,event_type,moveapp_id,eventlist_f
       for(field in eventlist_fields_filtered)
       {
         event_details[field] <- batch[[field]][j]
+        if(class(event_details[field]) == "units") events_details[field] <- drop_units(events_details[field])
       }
       output$event_details <- event_details
     
