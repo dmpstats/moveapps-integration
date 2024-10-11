@@ -2,7 +2,7 @@
   "settings": [
 	{
       "id": "server",
-      "name": "target server for upload",
+      "name": "Target server for upload",
       "description": "Choose the server for uploading",
       "defaultValue": "",
       "type": "STRING"
@@ -15,11 +15,11 @@
       "type": "STRING"
     },
 	{
-      "id": "batch_size",
-      "name": "Batch Size",
-      "description": "Number of observations per API call.  Default is 50.  Enter 0 to send all observations in a single batch.",
-      "defaultValue": 50,
-      "type": "DOUBLE"
+      "id": "grouping_col",
+      "name": "Grouping Column",
+      "description": "Name of the column in the input data for grouping observations that should remain together in the same batch during data upload to EarthRanger. If set to NULL, the data will be split into batches as needed without respecting any groupings",
+      "defaultValue": null,
+      "type": "STRING"
     },
 	{
       "id": "event_type",
@@ -39,7 +39,7 @@
       "id": "eventlist_fields",
       "name": "Fields to Pass to ER",
       "description": "If you would like to pass only certain movestack fields, list them here separated by comma or semicolon.  Leaving this blank will pass all fields.",
-      "defaultValue": "",
+      "defaultValue": null,
       "type": "STRING"
     }
   ],
@@ -49,13 +49,28 @@
         "name": "move2"
       },
       {
-        "name": "jsonlite"
+        "name": "jsonify"
       },
       {
         "name": "httr"
       },
       {
         "name": "sf"
+      },
+      {
+        "name": "units"
+      },
+      {
+        "name": "dplyr"
+      },
+      {
+        "name": "tidyr"
+      },
+      {
+        "name": "purrr"
+      },
+      {
+        "name": "cli"
       }
     ]
   },
