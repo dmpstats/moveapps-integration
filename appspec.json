@@ -11,8 +11,8 @@
       "id": "api_key",
       "name": "EarthRanger API key",
       "description": "Provide your EarthRanger API key",
-      "defaultValue": "",
-      "type": "STRING"
+      "defaultValue": null,
+      "type": "SECRET"
     },
 	{
       "id": "grouping_col",
