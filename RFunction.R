@@ -127,7 +127,13 @@ rFunction = function(data,
     ) |>
     dplyr::mutate(
       location = lapply(location, as.list),
-      event_details = lapply(event_details, as.list)
+      event_details = lapply(event_details, as.list),
+      event_details = purrr::modify_depth(event_details, 2, function(x){
+        if(is.list(x) && length(x) == 1 && is.data.frame(x[[1]])){
+          x <- x[[1]]
+        } 
+        x
+      })
     )
   
   
