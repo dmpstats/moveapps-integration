@@ -7,6 +7,7 @@ library("dplyr")
 library("tidyr")
 library("purrr")
 library("cli")
+library('lubridate')
 
 #local helpers
 `%!in%` <- Negate(`%in%`)
@@ -98,9 +99,11 @@ rFunction = function(data,
   data <- data |> 
     data.frame() |> 
     dplyr::mutate(
-      recorded_at = format(.data[[tm_id_col]], "%Y-%m-%d %X%z"),
+      # date-time cols formatted as ISO 8601 strings
+      dplyr::across(dplyr::where(~inherits(.x, "POSIXt")), \(x) format_iso8601(x)),
       # convert any columns of class integer64 to string, for safer json serialization
-      across(where(~inherits(.x, "integer64")), as.character)
+      dplyr::across(where(~inherits(.x, "integer64")), as.character),
+      recorded_at = .data[[tm_id_col]],
     ) |> 
     dplyr::rename(any_of(c(device_id = trck_id_col))) |> 
     units::drop_units()
@@ -127,7 +130,13 @@ rFunction = function(data,
     ) |>
     dplyr::mutate(
       location = lapply(location, as.list),
-      event_details = lapply(event_details, as.list)
+      event_details = lapply(event_details, as.list),
+      event_details = purrr::modify_depth(event_details, 2, function(x){
+        if(is.list(x) && length(x) == 1 && is.data.frame(x[[1]])){
+          x <- x[[1]]
+        } 
+        x
+      })
     )
   
   
@@ -234,4 +243,21 @@ rFunction = function(data,
   return(data_orig)
   
 }
+
+
+
+# wrapper to lubridate's `format_ISO8601()` to insert colon in TZ's time
+# component (i.e. +HH:MM), which seems to be a requirement when POSTing from
+# MoveApps to ER...
+format_iso8601 <- function(x, tz_colon = TRUE){
+  
+  if(!is.POSIXt(x)) cli::cli_abort("x must be a {.cls POSIXt} object, not {.cls {class(x)}}")
+  
+  out <- lubridate::format_ISO8601(x, usetz = TRUE)
+  
+  if(tz_colon) out <- sub('([+-][0-9]{2})([0-9]{2}$)','\\1:\\2', out, fixed = FALSE)
+  out
+}
+
+
 
