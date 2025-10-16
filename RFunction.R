@@ -67,7 +67,7 @@ rFunction = function(data,
   }
   
   
-  ### -- Get event fields to include in upload
+  ### -- Process fields chosen to be included in upload as event details
   if(is.null(eventlist_fields) || (length(eventlist_fields) == 1 && nchar(eventlist_fields) == 0)){
     event_fields <- names(data_orig)
   }else {
@@ -75,7 +75,11 @@ rFunction = function(data,
     event_fields_parsed <- unlist(strsplit(eventlist_fields,",|;")) 
     event_fields <- gsub("\\s+", "", event_fields_parsed)
   }
-
+  
+  # forcing names of all chosen fields to lower case, as per ER requirement
+  data <- dplyr::rename_with(data, tolower, .cols = dplyr::any_of(event_fields))
+  event_fields <- tolower(event_fields)
+  
   
   ### -- Process expected lat lon columns
   if("location_long" %!in% names(data)){
